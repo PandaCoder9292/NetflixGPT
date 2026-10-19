@@ -4,12 +4,15 @@ import { auth } from "../utils/firebase";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { addUser, removeUser } from "../utils/userSlice";
-import { AVATARLOGO, LOGO } from "../utils/constants";
+import { AVATARLOGO, LOGO, SUPPORTED_LANGUAGES } from "../utils/constants";
+import { toggleGptSearchView } from "../utils/gptSlice";
+import { changeLang } from "../utils/configSlice";
 
 const Header = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector((store) => store.user);
+  const showGptSearch = useSelector((store) => store.gpt.showGptSearch);
 
   const handelSignOut = () => {
     signOut(auth)
@@ -43,11 +46,39 @@ const Header = () => {
     return () => unsubscribe();
   }, []);
 
+  const handleGtpSearchClick = () => {
+    //Toggle GPT Search
+    dispatch(toggleGptSearchView());
+  };
+
+  const handleLangChange = (e) => {
+    //console.log(e.target.value);
+    dispatch(changeLang(e.target.value));
+  };
+
   return (
     <div className="absolute px-8 py-2 bg-gradient-to-b from-black z-10 w-full flex justify-between items-center">
       <img className="w-44 object-contain" src={LOGO} alt="NetFlix Logo" />
       {user && (
-        <div className="flex">
+        <div className="flex p-2 space-x-4">
+          {showGptSearch && (
+            <select
+              className="rounded-md p-2 bg-gray-900 text-white"
+              onChange={handleLangChange}
+            >
+              {SUPPORTED_LANGUAGES.map((lang) => (
+                <option key={lang.identifier} value={lang.identifier}>
+                  {lang.name}
+                </option>
+              ))}
+            </select>
+          )}
+          <button
+            className="bg-purple-800 py-2 px-4 rounded-md cursor-pointer"
+            onClick={handleGtpSearchClick}
+          >
+            {showGptSearch ? "Home Page" : "GTP Search"}
+          </button>
           <img
             className="w-10 h-10 rounded-md cursor-pointer"
             src={AVATARLOGO}

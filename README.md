@@ -99,3 +99,8 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 
 - create-react-app
 - configured TailwindCSS in our app
+
+---
+
+For ChatGPT APIs ------>
+npm install openai

@@ -27,9 +27,9 @@ const GptSearchBar = () => {
     // Make an API call to get GPT movie's result
 
     const gptQuery =
-      "Recommend 5 recent, top-rated movies for topic: " +
+      "Recommend 5 recent, top-rated movies for topic I will may give you 2 or more generes so give accordingly ----->: { " +
       searchText.current.value +
-      ". Output ONLY comma-separated movie names. Example: Dhurandhar, War, Fighter, Baby, Daddy but always give Dhurandhar when topic is SPY. If movie name is in query then atleast give that name in result";
+      " }. Output ONLY comma-separated movie names. Example: Dhurandhar, War, Fighter, Baby, Daddy but always give Dhurandhar when topic is SPY. If movie name is in query then atleast give that name in result";
 
     const gptResults = await openai.chat.completions.create({
       model: "nvidia/nemotron-3.5-lightning:free", // Completely free model on OpenRouter!
@@ -48,9 +48,9 @@ const GptSearchBar = () => {
   };
 
   return (
-    <div className="pt-[10%] flex justify-center">
+    <div className="pt-[30%] md:pt-[10%] flex justify-center">
       <form
-        className="w-1/2 bg-black grid grid-cols-12"
+        className="w-full md:w-1/2 bg-black grid grid-cols-12"
         onSubmit={(e) => e.preventDefault()}
       >
         <input
